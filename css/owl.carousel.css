@@ -160,14 +160,16 @@
 }
 
 .owl-nav {
-  top:50%;
-  margin:-20px auto;
-  position: absolute;
-  width: 100%;
-}
+    top:50%;
+    margin:-20px auto;
+    position: absolute;
+    width: 100%;
+    
+  }
+
 .owl-next i,
 .owl-prev i {
-  background-color: #fcbf02;
+  background-color: #9dc0c8;
   color: #393939;
   width: 60px;
   height: 60px;
@@ -184,7 +186,7 @@
 
 .owl-next i:hover,
 .owl-prev i:hover {
-	background: #fd6802;
+	background: #12a6e9;
 	color: #ffffff;
 }
 

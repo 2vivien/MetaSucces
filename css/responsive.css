@@ -222,7 +222,6 @@
         border-color: #393939;
         color: #fff !important;
         background-color: #393939;
-		border-radius: 15px 0px 15px 0px; 
     }
 	.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus{
 		border-color: #fd6802;
@@ -310,12 +309,14 @@
 	.slide-text h1{
 		font-size: 28px;
 		letter-spacing: 0px;
+        
 	}
 	.slide-text h2{
 		font-size: 16px;
 	}
 	.btn-light{
 		padding: 13px 24px;
+        margin-bottom: 20px;
 	}
 	.section{
 		padding: 60px 0;
@@ -457,6 +458,7 @@
 	.slide-text h1{
 		font-size: 28px;
 		letter-spacing: 0px;
+        
 	}
 	.message-box h2{
 		font-size: 24px;
