@@ -1,0 +1,26 @@
+
+services:
+  website:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"  # Cette ligne peut être enlevée lorsque vous utilisez Traefik
+    volumes:
+      - ./:/usr/share/nginx/html
+    networks:
+      - metasucces_network  # Réseau spécifique pour le site Metasucces
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.website.rule=Host(`metasucces.com`)" # Utilisez votre domaine
+      - "traefik.http.routers.website.entrypoints=websecure"
+      - "traefik.http.routers.website.tls.certresolver=letsencrypt"
+      - "traefik.http.services.website.loadbalancer.server.port=80" # Port exposé par Nginx
+      - "traefik.http.routers.website.middlewares=secHeaders" # Ajouter des middlewares pour la sécurité
+
+networks:
+  metasucces_network:  # Réseau spécifique pour éviter les conflits
+    driver: bridge
+  proxy:
+    external: true

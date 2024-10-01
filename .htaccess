@@ -1,0 +1,42 @@
+server {
+    listen 80;
+    server_name metasucces.com www.metasucces.com;
+
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+
+    # Redirection www vers non-www (ou vice versa)
+    if ($host = 'www.metasucces.com') {
+        return 301 https://metasucces.com$request_uri;
+    }
+
+    # Redirection vers HTTPS si SSL est utilisé (décommenter si nécessaire)
+    # if ($scheme = http) {
+    #     return 301 https://$host$request_uri;
+    # }
+
+    # Gérer les requêtes
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Redirections 301 pour les URL obsolètes (exemple)
+    rewrite ^/ancienne-page$ /nouvelle-page permanent;
+
+    # Ajouter des en-têtes pour le SEO
+    add_header X-Frame-Options "DENY";
+    add_header X-Content-Type-Options "nosniff";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header Referrer-Policy "no-referrer-when-downgrade";
+    
+    # Gestion des erreurs
+    error_page 404 /404.html;
+    location = /404.html {
+        internal;
+    }
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        internal;
+    }
+}
