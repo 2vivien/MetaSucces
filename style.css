@@ -1422,10 +1422,12 @@ header .slider-wrapper .owl-nav .owl-prev, .slider-wrapper .owl-nav {
     line-height: 62px;
     margin-top: 0;
     text-transform: none;
+    
 }
 
 .message-box p {
     margin-bottom: 20px;
+    
 }
 
 .message-box .lead {
@@ -1439,9 +1441,13 @@ header .slider-wrapper .owl-nav .owl-prev, .slider-wrapper .owl-nav {
 .post-media {
     position: relative;
 }
+.post-media p{
+    margin-top: 10px ;
+}
 
 .post-media img {
     width: 100%;
+    
 }
 
 .playbutton {
@@ -1743,6 +1749,8 @@ hr.invis1 {
 
 .fr-inner {
     margin-left: 90px;
+    margin-top: 20px;
+    
 }
 
 .features-left i {
@@ -1752,6 +1760,8 @@ hr.invis1 {
 .fl-inner {
     text-align: right;
     margin-right: 90px;
+    margin-top: 20px;
+    
 }
 
 #features h4 {

@@ -330,6 +330,13 @@
 	.home-one-slider-otem .slider-content-area{
 		height: 460px;
 	}
+    .post-media p{
+        display: none;
+    }
+    #before-post-media{
+        display: none;
+    }
+
 }
 
 @media (max-width: 768px) {
@@ -411,6 +418,12 @@
 	.home-one-slider-otem .slider-content-area{
 		height: 460px;
 	}
+    .post-media p{
+        display: none;
+    }
+    #before-post-media{
+        display: none;
+    }
 }
 
 @media (max-width: 600px) {
@@ -473,4 +486,5 @@
 	.home-one-slider-otem .slider-content-area{
 		height: 460px;
 	}
+
 }
