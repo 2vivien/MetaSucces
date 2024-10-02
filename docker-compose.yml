@@ -33,3 +33,4 @@ services:
       - "traefik.http.middlewares.redirect-to-non-www.redirectregex.regex=^https://www\\.(.*)"
       - "traefik.http.middlewares.redirect-to-non-www.redirectregex.replacement=https://$1"
       - "traefik.http.routers.website-www.middlewares=redirect-to-non-www"
+      #Autre regles

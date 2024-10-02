@@ -1,42 +1,71 @@
-server {
-    listen 80;
-    server_name metasucces.com www.metasucces.com;
+# Activer le moteur de réécriture
+RewriteEngine On
 
-    root /usr/share/nginx/html;
-    index index.html index.htm;
+# Redirection www vers non-www (SEO)
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 
-    # Redirection www vers non-www (ou vice versa)
-    if ($host = 'www.metasucces.com') {
-        return 301 https://metasucces.com$request_uri;
-    }
+# Redirection HTTP vers HTTPS (SEO + sécurité)
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-    # Redirection vers HTTPS si SSL est utilisé (décommenter si nécessaire)
-    # if ($scheme = http) {
-    #     return 301 https://$host$request_uri;
-    # }
+# Optimisation des URLs (sans extension .html)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html [L]
 
-    # Règle pour permettre les fichiers HTML sans l'extension
-    location / {
-        try_files $uri $uri/ /$uri.html =404;
-    }
+# Rediriger les anciennes pages vers les nouvelles
+RewriteRule ^ancienne-page$ /nouvelle-page [R=301,L]
 
-    # Redirections 301 pour les URL obsolètes (exemple)
-    rewrite ^/ancienne-page$ /nouvelle-page permanent;
+# Compression du contenu pour améliorer la vitesse de chargement (SEO + performance)
+<IfModule mod_deflate.c>
+  # Compression des types de fichiers courants
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
 
-    # Ajouter des en-têtes pour le SEO
-    add_header X-Frame-Options "DENY";
-    add_header X-Content-Type-Options "nosniff";
-    add_header X-XSS-Protection "1; mode=block";
-    add_header Referrer-Policy "no-referrer-when-downgrade";
-    
-    # Gestion des erreurs
-    error_page 404 /404.html;
-    location = /404.html {
-        internal;
-    }
+# Mise en cache du contenu statique (SEO + performance)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType text/javascript "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/x-javascript "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType application/pdf "access plus 1 month"
+  ExpiresByType application/x-shockwave-flash "access plus 1 month"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+  ExpiresDefault "access plus 1 week"
+</IfModule>
 
-    error_page 500 502 503 504 /50x.html;
-    location = /50x.html {
-        internal;
-    }
-}
+# Personnaliser les en-têtes HTTP pour la sécurité (SEO-friendly)
+<IfModule mod_headers.c>
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-XSS-Protection "1; mode=block"
+  Header always set Referrer-Policy "no-referrer-when-downgrade"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" # SEO-friendly HSTS
+  Header set Cache-Control "max-age=31536000, public" # Cache pour optimiser la vitesse
+</IfModule>
+
+# Réglages de sécurité supplémentaires
+<IfModule mod_rewrite.c>
+  RewriteCond %{THE_REQUEST} !HTTP/1\.1$
+  RewriteRule .* - [F,L]
+</IfModule>
+
+# Désactiver l'affichage des répertoires
+Options -Indexes
+
+# Protection contre le hotlinking (empêche que d'autres sites utilisent tes images)
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^https?://(www\.)?metasucces\.com [NC]
+RewriteRule \.(jpg|jpeg|png|gif)$ - [F,NC,L]
+
+# Gestion des erreurs personnalisées
+ErrorDocument 404 /404.html
+ErrorDocument 500 /50x.html
+
