@@ -15,9 +15,9 @@ server {
     #     return 301 https://$host$request_uri;
     # }
 
-    # Gérer les requêtes
+    # Règle pour permettre les fichiers HTML sans l'extension
     location / {
-        try_files $uri $uri/ =404;
+        try_files $uri $uri/ /$uri.html =404;
     }
 
     # Redirections 301 pour les URL obsolètes (exemple)
