@@ -18,30 +18,30 @@ services:
       - "traefik.http.services.website.loadbalancer.server.port=80"
 
       # Middlewares pour optimiser les performances et la sécurité
-      - "traefik.http.middlewares.compress.compress=true"  # Compression gzip
-      - "traefik.http.middlewares.cache.headers.customResponseHeaders.Cache-Control=max-age=31536000,public"  # Caching des ressources
-      - "traefik.http.middlewares.timeout.readTimeout=5s"  # Timeout pour lecture
-      - "traefik.http.middlewares.timeout.idleTimeout=10s"  # Timeout pour inactivité
-      - "traefik.http.middlewares.secHeaders.headers.frameDeny=true"  # Sécurité X-Frame-Options
-      - "traefik.http.middlewares.secHeaders.headers.contentTypeNosniff=true"  # Sécurité Content-Type
-      - "traefik.http.middlewares.secHeaders.headers.referrerPolicy=no-referrer-when-downgrade"  # Politique de Referrer
+      # - "traefik.http.middlewares.compress.compress=true"  # Compression gzip
+      # - "traefik.http.middlewares.cache.headers.customResponseHeaders.Cache-Control=max-age=31536000,public"  # Caching des ressources
+      # - "traefik.http.middlewares.timeout.readTimeout=5s"  # Timeout pour lecture
+      # - "traefik.http.middlewares.timeout.idleTimeout=10s"  # Timeout pour inactivité
+      # - "traefik.http.middlewares.secHeaders.headers.frameDeny=true"  # Sécurité X-Frame-Options
+      # - "traefik.http.middlewares.secHeaders.headers.contentTypeNosniff=true"  # Sécurité Content-Type
+      # - "traefik.http.middlewares.secHeaders.headers.referrerPolicy=no-referrer-when-downgrade"  # Politique de Referrer
 
-      # Attacher les middlewares
-      - "traefik.http.routers.website.middlewares=compress,cache,timeout,secHeaders"
+      # # Attacher les middlewares
+      # - "traefik.http.routers.website.middlewares=compress,cache,timeout,secHeaders"
 
       # Redirection www vers metasucces.com
-      - "traefik.http.routers.website-www.rule=Host(`www.metasucces.com`)"
-      - "traefik.http.middlewares.redirect-to-non-www.redirectregex.regex=^https://www\\.(.*)"
-      - "traefik.http.middlewares.redirect-to-non-www.redirectregex.replacement=https://$1"
-      - "traefik.http.routers.website-www.middlewares=redirect-to-non-www"
-      - "traefik.http.routers.website-www.entrypoints=websecure"
-      - "traefik.http.routers.website-www.tls.certresolver=letsencrypt"
+      # - "traefik.http.routers.website-www.rule=Host(`www.metasucces.com`)"
+      # - "traefik.http.middlewares.redirect-to-non-www.redirectregex.regex=^https://www\\.(.*)"
+      # - "traefik.http.middlewares.redirect-to-non-www.redirectregex.replacement=https://$1"
+      # - "traefik.http.routers.website-www.middlewares=redirect-to-non-www"
+      # - "traefik.http.routers.website-www.entrypoints=websecure"
+      # - "traefik.http.routers.website-www.tls.certresolver=letsencrypt"
 
-      # Middlewares pour les redirections et la sécurité
-      - "traefik.http.middlewares.redirect-to-non-www.redirectregex.permanent=true"  # Redirection permanente
-      - "traefik.http.middlewares.secHeaders.headers.browserXSSFilter=true"  # Protection XSS
-      - "traefik.http.middlewares.secHeaders.headers.sslRedirect=true"  # Rediriger HTTP vers HTTPS
-      - "traefik.http.middlewares.secHeaders.headers.sslForceHost=true"  # Forcer le SSL sur le host
+      # # Middlewares pour les redirections et la sécurité
+      # - "traefik.http.middlewares.redirect-to-non-www.redirectregex.permanent=true"  # Redirection permanente
+      # - "traefik.http.middlewares.secHeaders.headers.browserXSSFilter=true"  # Protection XSS
+      # - "traefik.http.middlewares.secHeaders.headers.sslRedirect=true"  # Rediriger HTTP vers HTTPS
+      # - "traefik.http.middlewares.secHeaders.headers.sslForceHost=true"  # Forcer le SSL sur le host
 
 networks:
   metasucces_network:  # Réseau spécifique pour éviter les conflits
