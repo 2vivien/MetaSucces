@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    restart: always 
     volumes:
       - ./:/usr/share/nginx/html
     networks:
