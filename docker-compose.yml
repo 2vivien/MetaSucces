@@ -4,8 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "80:80"  # Cette ligne peut être enlevée lorsque vous utilisez Traefik
+    
     volumes:
       - ./:/usr/share/nginx/html
     networks:
