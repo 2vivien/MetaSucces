@@ -1,0 +1,36 @@
+services:
+  website:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/usr/share/nginx/html
+    networks:
+      - metasucces_network
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      
+      # Règles pour le domaine metasucces.com
+      - "traefik.http.routers.website.rule=Host(`metasucces.com`)"
+      - "traefik.http.routers.website.entrypoints=websecure"
+      - "traefik.http.routers.website.tls.certresolver=letsencrypt"
+      - "traefik.http.services.website.loadbalancer.server.port=80"
+
+      # Compression gzip pour les ressources
+      - "traefik.http.middlewares.compress.compress=true"
+      
+      # Caching des ressources
+      - "traefik.http.middlewares.cache.headers.customResponseHeaders.Cache-Control=max-age=31536000,public"
+
+      # Timeout pour optimiser la gestion des connexions
+      - "traefik.http.middlewares.timeout.readTimeout=5s"
+      - "traefik.http.middlewares.timeout.idleTimeout=10s"
+      - "traefik.http.routers.website.middlewares=compress,cache,timeout,secHeaders"
+
+      # Redirection www vers metasucces.com
+      - "traefik.http.routers.website-www.rule=Host(`www.metasucces.com`)"
+      - "traefik.http.middlewares.redirect-to-non-www.redirectregex.regex=^https://www\\.(.*)"
+      - "traefik.http.middlewares.redirect-to-non-www.redirectregex.replacement=https://$1"
+      - "traefik.http.routers.website-www.middlewares=redirect-to-non-www"
+      #Autre regles
