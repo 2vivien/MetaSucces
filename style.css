@@ -771,6 +771,7 @@ header .slider-wrapper .owl-nav .owl-prev, .slider-wrapper .owl-nav {
     padding: 120px 0;
     position: relative;
     width: 100%;
+    
 }
 
 .parallax.parallax-off {
@@ -784,6 +785,7 @@ header .slider-wrapper .owl-nav .owl-prev, .slider-wrapper .owl-nav {
     vertical-align: sub;
     width: 100%;
     z-index: 2;
+   
 }
 
 .no-scroll-xy {
@@ -1442,7 +1444,8 @@ header .slider-wrapper .owl-nav .owl-prev, .slider-wrapper .owl-nav {
     position: relative;
 }
 .post-media p{
-    margin-top: 10px ;
+    margin-top: 25px ;
+    
 }
 
 .post-media img {
@@ -2447,6 +2450,12 @@ select.mobile-device {
 }
 
 
+
+
+
+
+
+
 /*------------------------------------------------------------------
     MISC
 -------------------------------------------------------------------*/
@@ -3013,6 +3022,71 @@ select.mobile-device {
     border-color: #12a6e9;
     color: rgba(255, 255, 255);
 	background: #393939;
+}
+.whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 100;
+    opacity: 0; /* Initialement invisible */
+    visibility: hidden; /* Empêche l'élément d'être cliquable au début */
+    animation: fadeIn 0.5s ease forwards 15s, bounceIn 2s ease 15.5s forwards, bounceInInfinite 2s ease infinite; /* Animation de rebond continue */
+}
+
+.whatsapp-float .my-float {
+    margin-top: 16px;
+}
+
+.whatsapp-float:hover {
+    background-color: #128C7E;
+}
+
+@keyframes bounceIn {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+    }
+    100% {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@keyframes bounceInInfinite {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+/* Optionnel : pour que le bouton reste visible après l'animation initiale */
+.whatsapp-float {
+    animation: fadeIn 0.5s ease forwards 15s, bounceIn 2s ease 15.5s forwards, bounceInInfinite 2s ease infinite; /* Animation de rebond continue */
 }
 
 
