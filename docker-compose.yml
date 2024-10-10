@@ -3,9 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always 
+    restart: always
     volumes:
-      - ./:/usr/share/nginx/html
+      - ./:/usr/share/nginx/html:ro  # Lecture seule pour des raisons de sécurité
     networks:
       - metasucces_network
       - proxy
@@ -15,25 +15,43 @@ services:
       - "traefik.http.routers.website.entrypoints=websecure"
       - "traefik.http.routers.website.tls.certresolver=letsencrypt"
       - "traefik.http.services.website.loadbalancer.server.port=80"
+      - "traefik.docker.network=proxy"
 
   nginx:
     image: nginx:latest
     volumes:
-      - ./:/usr/share/nginx/html
+      - ./:/usr/share/nginx/html:ro  # Lecture seule pour des raisons de sécurité
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
     networks:
       - metasucces_network
     restart: always
+    environment:
+      - NGINX_PORT=80
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: RaO5|,Oi3BxM
+      MYSQL_DATABASE: metasucces_db
+      MYSQL_USER: metasucces_vivien
+      MYSQL_PASSWORD: RaO5|,Oi3BxM
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - metasucces_network
 
   redis:
     image: redis:alpine
     networks:
       - metasucces_network
     restart: always
+    volumes:
+      - redis_data:/data  # Persistance des données Redis
 
   varnish:
     image: varnish:latest
-  
     volumes:
       - ./default.vcl:/etc/varnish/default.vcl
     networks:
@@ -45,3 +63,7 @@ networks:
     driver: bridge
   proxy:
     external: true
+
+volumes:
+  db_data: {}
+  redis_data: {}
