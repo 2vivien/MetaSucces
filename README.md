@@ -24,7 +24,7 @@ Avant de pouvoir utiliser MetaSucces, assurez-vous d'avoir les éléments suivan
 1. **Cloner le dépôt :**
 
    ```bash
-   git clone https://github.com/ton-repo/metasucces.git
+   git clone https://github.com/digitaleflex/metasucces.git
    cd metasucces
    ```
 
