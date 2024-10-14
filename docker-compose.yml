@@ -31,7 +31,7 @@ services:
   redis:
     image: bitnami/redis:latest
     environment:
-      - REDIS_PASSWORD=your_redis_password
+      - REDIS_PASSWORD=vivien12.
     networks:
       - metasucces_network
 
